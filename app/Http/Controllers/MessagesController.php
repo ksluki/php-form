@@ -20,7 +20,17 @@ class MessagesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([    'name' => 'required|string|max:255',    'email' => 'required|email|max:255',    'message' => 'required|string|max:1000',], [    'name.required' => 'Please enter your name.',    'email.required' => 'Please enter your email address.',    'email.email' => 'Please enter a valid email address.',    'message.required' => 'Please enter a message.',]);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+        ]);
+
+        Message::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ]);
 
         return redirect()->route('messages.index');
     }
